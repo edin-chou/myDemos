@@ -1,4 +1,4 @@
-package test;
+package gdufs.edin.demo.analysis.test;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,12 +9,7 @@ import java.util.Date;
 
 public class Test{
 
-	public synchronized void  love() throws InterruptedException{
-		for(;true;this.wait(1000))
-			System.out.println("5"+(1900+new Date().getYear())/100);
-	}
-	
-	
+
 	public static void main(String a[]) throws InterruptedException, IOException{
 /*		int inte =0;
 		while(inte<257){
@@ -30,8 +25,6 @@ public class Test{
 		//System.out.println(1900+new Date().getYear());
 		//while(true)
 			//System.out.println(5+new SimpleDateFormat("yyyyMd").format(new Date()));
-		
-		
 /*		String sentence = "一二三四五六七八sadf";
 		int senLen=sentence.length();
 		if(senLen<=0){
@@ -72,5 +65,7 @@ public class Test{
 			start=end-MAXLEN;
 			System.out.println(sentence.substring(start<0?0:start,end));
 		}
+		
+		
 	}
 }

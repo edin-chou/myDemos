@@ -1,4 +1,4 @@
-package util;
+package gdufs.edin.demo.analysis.sort;
 
 import java.util.Comparator;
 

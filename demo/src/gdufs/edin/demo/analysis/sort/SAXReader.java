@@ -1,4 +1,5 @@
-﻿package saxExecutor;
+﻿package gdufs.edin.demo.analysis.sort;
+
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -7,8 +8,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import util.ComparatorFactory;
-import util.ExtSort;
 
 
 public class SAXReader extends DefaultHandler {

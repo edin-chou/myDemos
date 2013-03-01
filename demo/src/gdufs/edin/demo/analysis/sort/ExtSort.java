@@ -1,4 +1,4 @@
-package util;
+package gdufs.edin.demo.analysis.sort;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

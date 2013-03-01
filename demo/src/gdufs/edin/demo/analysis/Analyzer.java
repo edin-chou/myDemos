@@ -1,4 +1,4 @@
-package statistics;
+package gdufs.edin.demo.analysis;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ public abstract class Analyzer {
 		_outputPath = OutputPath;
 	}
 
-	public abstract String generateDocument();
+	public abstract String execute();
 	
 	private boolean checkFile(){
 		String s = _inputFile.getName();

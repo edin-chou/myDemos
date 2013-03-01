@@ -1,4 +1,4 @@
-package statistics;
+package gdufs.edin.demo.analysis;
 
 import java.io.File;
 
@@ -9,7 +9,7 @@ public class Analyzer4LDOF extends Analyzer {
 	}
 
 	@Override
-	public String generateDocument() {
+	public String execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}
