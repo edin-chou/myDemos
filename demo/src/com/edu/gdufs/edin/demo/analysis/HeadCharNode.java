@@ -7,25 +7,22 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class HeadCharNode {
-	
-	private final int HASHSIZE = 512;
-	private Character _character;
-	private int _count;
-	private HashMap<Character,CharNode> _charNodeMap;
+public class HeadCharNode extends Node{
 
-	public HeadCharNode(StringBuffer inputString){
+	private HashMap<Character,CharNode> _charNodeMap;
+	
+	public HeadCharNode(){
+		
+	}
+
+	public HeadCharNode(StringBuffer inputString,int hashSize){
 		_character = inputString.charAt(0);
-		_charNodeMap = new HashMap<Character,CharNode>(HASHSIZE);
+		_charNodeMap = new HashMap<Character,CharNode>(hashSize);
 		_count = 1;
 		inputString.deleteCharAt(0);
 		if(inputString.length()>0){
-			_charNodeMap.put(inputString.charAt(0), new CharNode(inputString,HASHSIZE>>2));
+			_charNodeMap.put(inputString.charAt(0), new CharNode(inputString,_childHashSize));
 		}
-	}
-	public HeadCharNode(){
-		_charNodeMap = new HashMap<Character,CharNode>(HASHSIZE);
-		_count = 0;
 	}
 	
 	//新增一个词，第一个字必须相同，否则返回false
@@ -38,7 +35,7 @@ public class HeadCharNode {
 				if(cn!=null){
 					cn.addWords(inputString);
 				}else{
-					_charNodeMap.put(inputString.charAt(0),new CharNode(inputString,HASHSIZE>>2));
+					_charNodeMap.put(inputString.charAt(0),new CharNode(inputString,_childHashSize));
 				}
 			}
 			return true;
@@ -51,7 +48,7 @@ public class HeadCharNode {
 				if(cn!=null){
 					cn.addWords(inputString);
 				}else{
-					_charNodeMap.put(inputString.charAt(0),new CharNode(inputString,HASHSIZE>>2));
+					_charNodeMap.put(inputString.charAt(0),new CharNode(inputString,_childHashSize));
 				}
 			}
 			return true;

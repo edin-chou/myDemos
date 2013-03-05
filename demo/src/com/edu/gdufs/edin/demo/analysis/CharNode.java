@@ -10,34 +10,64 @@ import java.util.Map.Entry;
 
 public class CharNode {
 	
-	private final int MINHASHSIZE = 4;
-	private Character _character;
-	private int _count;
-	private int _hashSize;
+	protected final int MINHASHSIZE = 4;
+	protected Character _character;
+	protected int _count;
+	protected int _childHashSize;
+	protected Map<Character,CharNode> _charNodeMap;
 	
 	public Character getCharacter() {
 		return _character;
 	}
-
+	public void setCharacter(Character _character) {
+		this._character = _character;
+	}
 	public int getCount() {
 		return _count;
 	}
-
+	public void setCount(int _count) {
+		this._count = _count;
+	}
+	public int getChildHashSize() {
+		return _childHashSize;
+	}
+	public void setChildHashSize(int _childHashSize) {
+		this._childHashSize = _childHashSize;
+	}
 	public Map<Character, CharNode> getCharNodeMap() {
 		return _charNodeMap;
 	}
+	public void setCharNodeMap(Map<Character, CharNode> _charNodeMap) {
+		this._charNodeMap = _charNodeMap;
+	}
+	
+	public int getMINHASHSIZE() {
+		return MINHASHSIZE;
+	}
 
-	private Map<Character,CharNode> _charNodeMap;
-
+	public CharNode(int hashSize){
+		_count = 0;
+		_charNodeMap = new HashMap<Character,CharNode>(hashSize);
+		_childHashSize = hashSize>>4;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public CharNode(StringBuffer inputString,int hashSize){
 		_character = inputString.charAt(0);
-		_charNodeMap = new HashMap<Character,CharNode>(_hashSize);
+		_charNodeMap = new HashMap<Character,CharNode>(hashSize);
 		_count = 1;
 		int tmp = hashSize>>2;
-		_hashSize = tmp>MINHASHSIZE?tmp:MINHASHSIZE;
+		_childHashSize = tmp>MINHASHSIZE?tmp:MINHASHSIZE;
 		inputString.deleteCharAt(0);
 		if(inputString.length()>0){
-			_charNodeMap.put(inputString.charAt(0), new CharNode(inputString,_hashSize));
+			_charNodeMap.put(inputString.charAt(0), new CharNode(inputString,_childHashSize));
 		}
 	}
 	
@@ -52,7 +82,7 @@ public class CharNode {
 			if(cn!=null){
 				cn.addWords(inputString);
 			}else{
-				_charNodeMap.put(inputString.charAt(0),new CharNode(inputString,_hashSize));
+				_charNodeMap.put(inputString.charAt(0),new CharNode(inputString,_childHashSize));
 			}
 		}
 		return true;	
