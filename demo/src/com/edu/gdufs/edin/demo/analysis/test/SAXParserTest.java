@@ -1,6 +1,5 @@
-package gdufs.edin.demo.analysis.test;
+package com.edu.gdufs.edin.demo.analysis.test;
 
-import gdufs.edin.demo.analysis.sort.SAXReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +9,8 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
+
+import com.edu.gdufs.edin.demo.analysis.sort.SAXReader;
 
 public class SAXParserTest {
 	

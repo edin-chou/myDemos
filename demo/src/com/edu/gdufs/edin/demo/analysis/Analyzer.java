@@ -1,4 +1,4 @@
-package gdufs.edin.demo.analysis;
+package com.edu.gdufs.edin.demo.analysis;
 
 import java.io.File;
 
@@ -23,11 +23,11 @@ public abstract class Analyzer {
 		_outputPath = OutputPath;
 	}
 
-	public abstract String execute();
+	public abstract String execute() throws Exception;
 	
-	private boolean checkFile(){
+	protected boolean checkFile(){
 		String s = _inputFile.getName();
-		if(s.substring(s.indexOf("."), s.length()).equals("txt")){
+		if(s.substring(s.indexOf("."), s.length()).equals(".txt")){
 			return true;
 		}else{
 			return false;

@@ -1,4 +1,4 @@
-﻿package gdufs.edin.demo.analysis.sort;
+﻿package com.edu.gdufs.edin.demo.analysis.sort;
 
 
 import java.io.IOException;

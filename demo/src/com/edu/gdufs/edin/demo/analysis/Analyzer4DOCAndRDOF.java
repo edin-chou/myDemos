@@ -1,4 +1,4 @@
-package gdufs.edin.demo.analysis;
+package com.edu.gdufs.edin.demo.analysis;
 
 import java.io.File;
 
