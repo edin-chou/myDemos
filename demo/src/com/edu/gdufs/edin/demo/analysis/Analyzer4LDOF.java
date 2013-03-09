@@ -18,16 +18,7 @@ public class Analyzer4LDOF extends Analyzer {
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
 		if(checkFile()){
-			HeadCharNode hcn = new HeadCharNode();
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(_inputFile)));
-			String ss = br.readLine();
-			while(ss!=null){
-				hcn.addWords(new StringBuffer(ss));
-				ss = br.readLine();
-			}
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out)); 
-			hcn.writeCount(bw);
-			bw.close();
+			
 		}else{
 			throw new Exception("Bad inputFile for Analyzer,please chose a \".txt\" file for it.");
 		}

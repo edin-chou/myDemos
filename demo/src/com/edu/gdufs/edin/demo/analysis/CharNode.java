@@ -52,26 +52,19 @@ public class CharNode {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	public CharNode(StringBuffer inputString,int hashSize){
 		_character = inputString.charAt(0);
 		_charNodeMap = new HashMap<Character,CharNode>(hashSize);
+		inputString.deleteCharAt(0);
 		_count = 1;
 		int tmp = hashSize>>2;
 		_childHashSize = tmp>MINHASHSIZE?tmp:MINHASHSIZE;
-		inputString.deleteCharAt(0);
 		if(inputString.length()>0){
 			_charNodeMap.put(inputString.charAt(0), new CharNode(inputString,_childHashSize));
 		}
 	}
 	
-	public boolean addWords(StringBuffer inputString) throws Exception{
+/*	public boolean addWords(StringBuffer inputString) throws Exception{
 		if(!_character.equals(inputString.charAt(0))){
 				throw new Exception("Wrong inputString");
 		}
@@ -86,7 +79,7 @@ public class CharNode {
 			}
 		}
 		return true;	
-	}
+	}*/
 
 	
 }

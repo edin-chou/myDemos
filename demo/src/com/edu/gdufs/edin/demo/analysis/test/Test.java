@@ -1,15 +1,28 @@
 package com.edu.gdufs.edin.demo.analysis.test;
 
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
-import com.edu.gdufs.edin.demo.analysis.Analyzer;
-import com.edu.gdufs.edin.demo.analysis.Analyzer4LDOF;
-import com.edu.gdufs.edin.demo.analysis.HeadCharNode;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+
+import com.edu.gdufs.edin.demo.analysis.CharTree;
+import com.edu.gdufs.edin.demo.analysis.sort.ComparatorFactory;
+import com.edu.gdufs.edin.demo.analysis.sort.SAXReader;
 
 public class Test{
 
@@ -102,7 +115,49 @@ public class Test{
 		CharNode cn2 = map.get(sb2.charAt(0));
 		System.out.println(cn2.getCharacter());*/
 		
-		Analyzer ana = new Analyzer4LDOF(new File("E:\\test\\result27758121415474.txt"),"E:\\test\\result27758121415474.txt");
-		ana.execute();
+		/*Analyzer ana = new Analyzer4LDOF(new File("E:\\test\\result27758121415474.txt"),"E:\\test\\result27758121415474.txt");
+		
+		ana.execute();*/
+		
+		
+		
+		String xmlPath = "F:\\my projects\\java\\corpus\\data\\NLPIR_Weibo_Data.xml";
+		//String xmlPath = "F:\\my projects\\java\\corpus\\data\\test.xml";
+		long starttime = System.currentTimeMillis();
+		System.out.println("start tasking!");
+		try {
+			SAXReader handler = new SAXReader();
+			SAXParserFactory saxparserfactory = SAXParserFactory.newInstance();
+			SAXParser saxparser = saxparserfactory.newSAXParser();
+			saxparser.parse(new File(xmlPath), handler);
+			long endtime = System.currentTimeMillis();
+			System.out.println("all tasks spends "+(endtime-starttime)+"ms!!");
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		
+		
+		/*BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("e:\\test\\1.txt"))));
+		CharTree ct = new CharTree(bw);
+		File f = new File("E:\\test\\sortResult11167148899019.txt");
+		long start = System.currentTimeMillis();
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+		String tmp = br.readLine();
+		while(tmp!=null){
+			ct.addWords(new StringBuffer(tmp));
+			tmp = br.readLine();
+		}
+		long end = System.currentTimeMillis();
+		ct.close();
+
+		//System.out.println(ct.getTotalCount());
+		*/
+		
 	}
 }
