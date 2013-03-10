@@ -30,7 +30,7 @@ public class WordWriter4DOCAndLDOF extends WordWriter {
 	}
 	
 	private void writeCountRecursion(CharNode charNode,String prefixString) throws IOException{
-		String tmp = +charNode.getCharacter()+prefixString;
+		String tmp = charNode.getCharacter()+prefixString;
 		double entropy = getEntropy(charNode);
 		//System.out.println(tmp+"\t"+tRate+"\t"+entropy+"\t"+ charNode.getCount()+"\t"+_totalCount+"\t"+tmp.length()+"\t"+Math.pow(_totalCount, tmp.length()));
 		if(entropy>=ENTROPY_THRESHOLD&&charNode._count>=COUNT_THRESHOLD){

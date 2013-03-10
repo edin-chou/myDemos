@@ -23,18 +23,10 @@ public class ExtSort {
 	private List<String> _wordList=new ArrayList<String>();
 	//外排序文件列表
 	private List<String> _fileList=new ArrayList<String>();
-	//比较器
-	private Comparator _comparator = null;
-	
-	//路径初始化，初始化外排序
-	public ExtSort(String savePath,Comparator comparator){
-		_savePath=savePath;
-		_comparator=comparator;
-	}
+
 	//路径初始化，初始化外排序
 	public ExtSort(String savePath){
 		_savePath=savePath;
-		_comparator = ComparatorFactory.getPreComparator();
 	}
 
 	//往外排序添加一个句子的后缀词的前MAXLEN个
@@ -58,7 +50,12 @@ public class ExtSort {
 		}
 		for(int end=senLen,start;end>0;end--){
 			start=end-maxWordLen;
-			addWord(sentence.substring(start<0?0:start,end));
+			String tmp = sentence.substring(start<0?0:start,end);
+			StringBuffer sb = new StringBuffer();
+			for(int i = tmp.length()-1;i>=0;i--){
+				sb.append(tmp.charAt(i));
+			}
+			addWord(sb.toString());
 		}
 	}
 	
@@ -82,7 +79,7 @@ public class ExtSort {
 	//对内存记录进行排序，并保存成文件
 	private String sortAndSave() throws IOException{
 		if(_wordList.size()>=0){
-			Collections.sort(_wordList,_comparator);
+			Collections.sort(_wordList);
 			String fileName = _savePath+"/tmp";//"/split"+System.nanoTime()+".txt";
 			File file = new File(fileName);
 			if(!file.exists()){
@@ -128,7 +125,7 @@ public class ExtSort {
 					String word2 = br2.readLine();
 					//文件1,2合并
 					while(word1!=null&&word2!=null){
-						if(_comparator.compare(word1, word2)<=0){
+						if(word1.compareTo(word2)<=0){
 							bw.write(word1+"\n");
 							word1=br1.readLine();
 						}else{
