@@ -1,6 +1,7 @@
 package com.edu.gdufs.edin.demo.analysis;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Iterator;
@@ -10,36 +11,27 @@ import java.util.Map.Entry;
 public class CharTree {
 	
 	private final int INITHASHSIZE = 512;
-	private final double ENTROPY_THRESHOLD = 0.8;
-	private final int COUNT_THRESHOLD = 3;
 	private CharNode _root;
-	private BufferedWriter _bufferedWriter;
+	private WordWriter _wordWriter;
 	private long _totalCount;
 	
 	
-	public CharTree(){
+	public CharTree(WordWriter ww){
 		_root = new CharNode(INITHASHSIZE);
 		_totalCount=0;
-		_bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
-	}
-	
-	public CharTree(BufferedWriter bw){
-		_root = new CharNode(INITHASHSIZE);
-		_totalCount=0;
-		_bufferedWriter = bw;
+		_wordWriter = ww;
 	}
 
 	public long getTotalCount() {
 		return _totalCount;
 	}
-
-	public void setBufferedWriter(BufferedWriter bw){
-		_bufferedWriter = bw;
-	}
 	
 	public void close() throws IOException{
-		_bufferedWriter.flush();
-		_bufferedWriter.close();
+		write(_root,_wordWriter);
+		_root = null;
+		_wordWriter = null;
+		_totalCount =0;
+		System.gc();
 	}
 	
 	
@@ -66,10 +58,10 @@ public class CharTree {
 					}
 				}
 			}else{
-				if(_bufferedWriter==null){
-					throw new Exception("please set the BufferedWriter!!");
+				if(_wordWriter==null){
+					throw new Exception("please set the WordWriter!!");
 				}else{
-					writeCount(_root,_bufferedWriter);
+					write(_root,_wordWriter);
 					_root = new CharNode(INITHASHSIZE);
 					_root._character=inputString.charAt(0);
 					addWords(inputString);
@@ -107,7 +99,11 @@ public class CharTree {
 		return returnValue;
 	}
 	
-	public void writeCount(CharNode root,BufferedWriter Writer) throws IOException{
+	public void write(CharNode root,WordWriter wordWriter) throws IOException{
+		wordWriter.write(root);
+	}
+	
+/*	public void writeCount(CharNode root,BufferedWriter Writer) throws IOException{
 		double entropy = getEntropy(root);
 		//System.out.println(root._character+"\t"+entropy+"\t"+ root.getCount()+"\t");
 		if(entropy>=ENTROPY_THRESHOLD&&root._count>=COUNT_THRESHOLD){
@@ -143,7 +139,7 @@ public class CharTree {
 			entropy -= rate*Math.log(rate)/Math.log(2);
 		}
 		return entropy;
-	}
+	}*/
 	
 
 }

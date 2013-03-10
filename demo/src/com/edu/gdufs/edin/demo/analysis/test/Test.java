@@ -21,6 +21,9 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import com.edu.gdufs.edin.demo.analysis.CharTree;
+import com.edu.gdufs.edin.demo.analysis.WordWriter;
+import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndLDOF;
+import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndRDOF;
 import com.edu.gdufs.edin.demo.analysis.sort.ComparatorFactory;
 import com.edu.gdufs.edin.demo.analysis.sort.SAXReader;
 
@@ -121,7 +124,7 @@ public class Test{
 		
 		
 		
-		String xmlPath = "F:\\my projects\\java\\corpus\\data\\NLPIR_Weibo_Data.xml";
+		/*String xmlPath = "F:\\my projects\\java\\corpus\\data\\NLPIR_Weibo_Data.xml";
 		//String xmlPath = "F:\\my projects\\java\\corpus\\data\\test.xml";
 		long starttime = System.currentTimeMillis();
 		System.out.println("start tasking!");
@@ -140,7 +143,7 @@ public class Test{
 			e.printStackTrace();
 		} catch (IOException e){
 			e.printStackTrace();
-		}
+		}*/
 		
 		
 		/*BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("e:\\test\\1.txt"))));
@@ -158,6 +161,46 @@ public class Test{
 
 		//System.out.println(ct.getTotalCount());
 		*/
+		
+		
+		System.out.println("start analyzing...");
+		String savePath1 = "e:\\test\\preAnalyzed"+System.nanoTime()+".txt";
+		WordWriter ww = new WordWriter4DOCAndRDOF(savePath1);
+		CharTree ct = new CharTree(ww);
+		File f = new File("e:\\test\\sortResult15704538963378.txt");
+		long start = System.currentTimeMillis();
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+		String tmp = br.readLine();
+		while(tmp!=null){
+			ct.addWords(new StringBuffer(tmp));
+			tmp = br.readLine();
+		}
+		long end = System.currentTimeMillis();
+		br.close();
+		ct.close();
+		System.out.println("total count:"+ct.getTotalCount()+"\t");
+		System.out.println("Analyzing1 spends "+(end - start)+"ms");
+		System.out.println("Analyzed1 data was saved in \""+savePath1+"\"");
+		ww=null;
+		ct=null;
+		System.gc();
+		
+		String savePath2 = "e:\\test\\postAnalyzed"+System.nanoTime()+".txt";
+		WordWriter ww2 = new WordWriter4DOCAndLDOF(savePath2);
+		CharTree ct2 = new CharTree(ww2);
+		File f2 = new File("e:\\test\\sortResult15805923790990.txt");
+		long start2 = System.currentTimeMillis();
+		BufferedReader br2 = new BufferedReader(new InputStreamReader(new FileInputStream(f2)));
+		String tmp2 = br2.readLine();
+		while(tmp2!=null){
+			ct2.addWords(new StringBuffer(tmp2));
+			tmp2 = br2.readLine();
+		}
+		long end2 = System.currentTimeMillis();
+		ct2.close();
+		System.out.println("total count:"+ct2.getTotalCount()+"\t");
+		System.out.println("Analyzing2 spends "+(end2 - start2)+"ms");
+		System.out.println("Analyzed2 data was saved in \""+savePath2+"\"");
 		
 	}
 }
