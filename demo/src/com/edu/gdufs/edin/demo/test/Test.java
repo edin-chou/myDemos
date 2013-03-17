@@ -1,4 +1,4 @@
-package com.edu.gdufs.edin.demo.analysis.test;
+package com.edu.gdufs.edin.demo.test;
 
 
 import java.io.BufferedReader;
@@ -24,7 +24,6 @@ import com.edu.gdufs.edin.demo.analysis.CharTree;
 import com.edu.gdufs.edin.demo.analysis.WordWriter;
 import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndLDOF;
 import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndRDOF;
-import com.edu.gdufs.edin.demo.analysis.sort.SAXReader;
 
 public class Test{
 
