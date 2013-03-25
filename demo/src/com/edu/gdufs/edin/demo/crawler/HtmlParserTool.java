@@ -15,6 +15,8 @@ import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
+import com.edu.gdufs.edin.demo.crawler.linkfilters.LinkFilter;
+
 public class HtmlParserTool {
 	//获取一个网站上的链接，filter来过滤链接
 	public static Set<String> extracLinks(String url,LinkFilter filter){
@@ -46,10 +48,10 @@ public class HtmlParserTool {
 					String linkUrl = link.getLink();	//URL
 					if(filter.accept(linkUrl)){
 						links.add(//java.net.URLEncoder.encode(linkUrl));
-								linkUrl.replaceAll("\\?", "\\%3F")//去?
-								.replaceAll("\\&", "\\%26")//去&
-								.replaceAll("\\|", "\\%124")//去|
-								.replaceAll("\\#", ""));//去#
+								linkUrl.replaceAll("\\?", "\\%3F")//转码
+								.replaceAll("\\&", "\\%26")
+								.replaceAll("\\|", "\\%124")
+								.replaceAll("\\#", ""));
 					};
 				}else{							//<frame>标签
 					// 提取frame 里src 属性的链接，如<frame src="test.html"/>

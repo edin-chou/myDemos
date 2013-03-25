@@ -16,7 +16,7 @@ public class LinkQueue {
 		return unVisitedUrl;
 	}
 	
-	private void addVisitedUrl(String url){
+	public void addVisitedUrl(String url){
 		visitedUrl.add(url);
 	}
 	

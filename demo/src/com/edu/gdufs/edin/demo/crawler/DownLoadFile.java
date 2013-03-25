@@ -108,9 +108,4 @@ public class DownLoadFile {
 		
 		return filePath;
 	}
-	
-	
-	
-	
-
 }

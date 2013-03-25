@@ -16,7 +16,7 @@ public class HibernateTest {
 	public static void main(String args[]) throws ParseException{
 		
 		
-/*		Configuration conf = new Configuration().configure();
+		Configuration conf = new Configuration().configure();
 		SessionFactory sf = conf.buildSessionFactory();
 		Session sess = sf.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -30,7 +30,7 @@ public class HibernateTest {
 		tx.commit();
 		sess.close();
 		sf.close();
-		System.out.println("finished");*/
+		System.out.println("finished");
 		
 	}
 

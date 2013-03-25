@@ -1,29 +1,15 @@
 package com.edu.gdufs.edin.demo.test;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.sql.Date;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import org.xml.sax.SAXException;
-
-import com.edu.gdufs.edin.demo.analysis.CharTree;
-import com.edu.gdufs.edin.demo.analysis.WordWriter;
-import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndLDOF;
-import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndRDOF;
+import com.edu.gdufs.edin.demo.crawler.linkfilters.SinaLinkFilter;
+import com.edu.gdufs.edin.demo.model.HibernateUtil;
+import com.edu.gdufs.edin.demo.model.News;
 
 public class Test{
 
@@ -145,7 +131,7 @@ public class Test{
 		
 		
 		
-		System.out.println("start analyzing...");
+/*		System.out.println("start analyzing...");
 		String savePath1 = "e:\\test\\preAnalyzed"+System.nanoTime()+".txt";
 		WordWriter ww = new WordWriter4DOCAndRDOF(savePath1);
 		CharTree ct = new CharTree(ww);
@@ -182,7 +168,60 @@ public class Test{
 		ct2.close();
 		System.out.println("total count:"+ct2.getTotalCount()+"\t");
 		System.out.println("Analyzing2 spends "+(end2 - start2)+"ms");
-		System.out.println("Analyzed2 data was saved in \""+savePath2+"\"");
+		System.out.println("Analyzed2 data was saved in \""+savePath2+"\"");*/
+		
+		
+	/*	String s = "http://news.sina.com.cn/society/' + data[i].url + '";
+		SinaLinkFilter slf = new SinaLinkFilter();
+	    if(!s.matches("^.+[/s ].?")){
+	    	System.out.println(true);
+	    }else{
+	    	System.out.println(false);
+	    }
+		*/
+		
+		Session session = null;
+		Transaction transaction = null;
+		
+		session = HibernateUtil.currentSession();
+		transaction = session.beginTransaction();
+		
+		News news1 =new News();
+		news1.setTitle("");
+		news1.setSource("1");
+		news1.setMediaid("");
+		news1.setDate(new Date(2013,03,23));
+		news1.setContent("");
+
+		News news2 =new News();
+		news2.setTitle("");
+		news2.setSource("http://news.sina.com.cn/s/2013-03-23/021926615743.shtml");
+		news2.setMediaid("");
+		news2.setDate(new Date(2013,03,23));
+		news2.setContent("");
+		
+		News news3 =new News();
+		news3.setTitle("");
+		news3.setSource("3");
+		news3.setMediaid("");
+		news3.setDate(new Date(2013,03,23));
+		news3.setContent("");
+		
+		
+		try{
+			session.save(news1);
+			transaction.commit();
+			session.save(news2);
+		}catch(HibernateException e){
+			HibernateUtil.closeSession();
+			session = HibernateUtil.currentSession();
+			transaction = session.beginTransaction();
+		}finally{
+			session.save(news3);
+			transaction.commit();
+/*			session = HibernateUtil.currentSession();
+			transaction = session.beginTransaction();*/
+		}
 		
 		
 	}

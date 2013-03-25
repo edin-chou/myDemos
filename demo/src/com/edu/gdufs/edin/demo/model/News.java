@@ -8,6 +8,7 @@ public class News {
 	private Date _date;
 	private String _title;
 	private String _source;
+	private String _mediaid;
 	private String _content;
 	
 	public Integer getId() {
@@ -34,11 +35,26 @@ public class News {
 	public void setSource(String _source) {
 		this._source = _source;
 	}
+	public String getMediaid() {
+		return _mediaid;
+	}
+	public void setMediaid(String _mediaid) {
+		this._mediaid = _mediaid;
+	}
 	public String getContent() {
 		return _content;
 	}
 	public void setContent(String _content) {
 		this._content = _content;
+	}
+	
+	public String toString(){
+		return "title:"+(_title==null?"":_title)+"\n"
+				+"date:"+(_date==null?"":_date.toString())+"\n"
+						+"mediaid:"+(_mediaid==null?"":_mediaid)+"\n"
+								+"source:"+(_source==null?"":_source)+"\n"
+										+"content:"+(_content==null?"":_content);
+		
 	}
 	
 	
