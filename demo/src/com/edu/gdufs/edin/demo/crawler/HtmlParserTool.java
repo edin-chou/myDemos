@@ -15,11 +15,11 @@ import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import com.edu.gdufs.edin.demo.crawler.linkfilters.LinkFilter;
+import com.edu.gdufs.edin.demo.crawler.cobweb.Cobweb;
 
 public class HtmlParserTool {
 	//获取一个网站上的链接，filter来过滤链接
-	public static Set<String> extracLinks(String url,LinkFilter filter){
+	public static Set<String> extracLinks(String url,Cobweb cobweb){
 		Set<String> links = new HashSet<String>();
 		
 		try {
@@ -46,7 +46,7 @@ public class HtmlParserTool {
 				if(tag instanceof LinkTag){		//<a> 标签
 					LinkTag link = (LinkTag) tag;
 					String linkUrl = link.getLink();	//URL
-					if(filter.accept(linkUrl)){
+					if(cobweb.accept(linkUrl)){
 						links.add(//java.net.URLEncoder.encode(linkUrl));
 								linkUrl.replaceAll("\\?", "\\%3F")//转码
 								.replaceAll("\\&", "\\%26")
@@ -63,7 +63,7 @@ public class HtmlParserTool {
 						end = frame.indexOf(">");
 					}
 					String frameUrl = frame.substring(5, end - 1);
-					if (filter.accept(frameUrl)){
+					if (cobweb.accept(frameUrl)){
 						links.add(frameUrl);
 					}
 				}

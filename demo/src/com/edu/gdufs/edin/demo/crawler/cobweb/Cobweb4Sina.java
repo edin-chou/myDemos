@@ -1,13 +1,18 @@
-package com.edu.gdufs.edin.demo.crawler.linkfilters;
+package com.edu.gdufs.edin.demo.crawler.cobweb;
 
 import org.htmlparser.NodeFilter;
 
 import com.edu.gdufs.edin.demo.crawler.nodefilters.SinaFilter;
+import com.edu.gdufs.edin.demo.model.NewsCounter;
 
 
-public class SinaLinkFilter implements LinkFilter {
+public class Cobweb4Sina implements Cobweb {
 	
 	private String[] _seeds={"http://news.sina.com.cn/society/"};
+	
+	private final String _from = "新浪网社会频道";
+
+	private NewsCounter _newsCounter;
 
 	@Override
 	public boolean accept(String url){
@@ -35,4 +40,21 @@ public class SinaLinkFilter implements LinkFilter {
 		return "gb2312";
 	}
 
+	@Override
+	public String getFrom() {
+		// TODO Auto-generated method stub
+		return _from;
+	}
+	
+	@Override
+	public NewsCounter getNewsCounter() {
+		// TODO Auto-generated method stub
+		return _newsCounter;
+	}
+
+	@Override
+	public void setNewsCounter(NewsCounter newsCounter) {
+		// TODO Auto-generated method stub
+		_newsCounter=newsCounter;
+	}
 }

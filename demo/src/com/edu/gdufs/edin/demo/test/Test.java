@@ -2,14 +2,14 @@ package com.edu.gdufs.edin.demo.test;
 
 
 import java.sql.Date;
+import java.util.Calendar;
 
-import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.edu.gdufs.edin.demo.crawler.linkfilters.SinaLinkFilter;
 import com.edu.gdufs.edin.demo.model.HibernateUtil;
-import com.edu.gdufs.edin.demo.model.News;
+import com.edu.gdufs.edin.demo.model.NewsCounter;
 
 public class Test{
 
@@ -179,7 +179,7 @@ public class Test{
 	    	System.out.println(false);
 	    }
 		*/
-		
+/*		
 		Session session = null;
 		Transaction transaction = null;
 		
@@ -219,10 +219,45 @@ public class Test{
 		}finally{
 			session.save(news3);
 			transaction.commit();
-/*			session = HibernateUtil.currentSession();
-			transaction = session.beginTransaction();*/
+			session = HibernateUtil.currentSession();
+			transaction = session.beginTransaction();
+		}*/
+		
+		
+	/*	Calendar calendar = Calendar.getInstance();
+		calendar.set(2013, 2, 28);
+		
+		Session session = HibernateUtil.currentSession();
+		Transaction transaction = session.beginTransaction();
+		
+		Query query = session.createQuery("from NewsCounter nc where nc.date=:date and nc.from=:from")
+				.setDate("date",calendar.getTime())
+				.setString("from","凤凰网");
+		
+		NewsCounter newsCounter = (NewsCounter)query.uniqueResult();
+		
+		if(newsCounter==null){
+			newsCounter = new NewsCounter();
+			newsCounter.setFrom("凤凰网");
+			newsCounter.setDate(calendar.getTime());
+			newsCounter.setCount(0);
+			session.save(newsCounter);
+			transaction.commit();
+			HibernateUtil.closeSession();
 		}
 		
+		session = HibernateUtil.currentSession();
+		transaction = session.beginTransaction();
+		session.update(newsCounter);
+		transaction.commit();
+		HibernateUtil.closeSession();
+		System.out.println("get the NewsCounter:\n"+newsCounter.toString());*/
+		
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2013, 2, 28, 0, 0, 0);
+		System.out.println(calendar.getTime());
 		
 	}
+	
 }

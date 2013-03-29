@@ -39,9 +39,6 @@ public class CharTree {
 	public boolean addWords(StringBuffer inputString) throws Exception{
 		boolean returnValue = false;
 		inputString.length();
-		/*if(inputString.length()>3&&inputString.substring(0, 4).equals("不是昨天")){
-			System.out.println(1);
-		}*/
 		if(_root._character!=null){
 			if(_root._character.equals(inputString.charAt(0))){
 				inputString.deleteCharAt(0);
@@ -102,44 +99,6 @@ public class CharTree {
 	public void write(CharNode root,WordWriter wordWriter) throws IOException{
 		wordWriter.write(root);
 	}
-	
-/*	public void writeCount(CharNode root,BufferedWriter Writer) throws IOException{
-		double entropy = getEntropy(root);
-		//System.out.println(root._character+"\t"+entropy+"\t"+ root.getCount()+"\t");
-		if(entropy>=ENTROPY_THRESHOLD&&root._count>=COUNT_THRESHOLD){
-			Writer.write(root._character+"\t"+entropy+"\t"+root._count+"\n");
-		}
-		Set<Entry<Character, CharNode>> se = root._charNodeMap.entrySet();
-		for(Iterator i = se.iterator();i.hasNext();){
-			Entry<Character,CharNode> e = (Entry<Character,CharNode>)i.next();
-			writeCountRecursion(e.getValue(),Writer,root._character.toString());
-		}
-		Writer.flush();
-	}
-	
-	private void writeCountRecursion(CharNode charNode,BufferedWriter Writer,String prefixString) throws IOException{
-		String tmp = prefixString+charNode.getCharacter();
-		double entropy = getEntropy(charNode);
-		//System.out.println(tmp+"\t"+tRate+"\t"+entropy+"\t"+ charNode.getCount()+"\t"+_totalCount+"\t"+tmp.length()+"\t"+Math.pow(_totalCount, tmp.length()));
-		if(entropy>=ENTROPY_THRESHOLD&&charNode._count>=COUNT_THRESHOLD){
-			Writer.write(tmp+"\t"+entropy+"\t"+charNode._count+"\n");
-		}
-		Set<Entry<Character, CharNode>> se = charNode._charNodeMap.entrySet();
-		for(Iterator i = se.iterator();i.hasNext();){
-			Entry<Character,CharNode> e = (Entry<Character,CharNode>)i.next();
-			writeCountRecursion(e.getValue(),Writer,tmp);
-		}
-	}
-	
-	private double getEntropy(CharNode charNode){
-		double entropy = .0;
-		for(Iterator i = charNode._charNodeMap.entrySet().iterator();i.hasNext();){
-			Entry<Character,CharNode> e = (Entry<Character,CharNode>) i.next();
-			double rate = e.getValue()._count/(double)charNode._count;
-			entropy -= rate*Math.log(rate)/Math.log(2);
-		}
-		return entropy;
-	}*/
 	
 
 }

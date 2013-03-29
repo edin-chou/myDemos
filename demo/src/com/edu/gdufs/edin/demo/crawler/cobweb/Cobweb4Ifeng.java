@@ -1,13 +1,18 @@
-package com.edu.gdufs.edin.demo.crawler.linkfilters;
+package com.edu.gdufs.edin.demo.crawler.cobweb;
 
 import org.htmlparser.NodeFilter;
 
 import com.edu.gdufs.edin.demo.crawler.nodefilters.IfengFilter;
 import com.edu.gdufs.edin.demo.crawler.nodefilters.SinaFilter;
+import com.edu.gdufs.edin.demo.model.NewsCounter;
 
-public class IfengLinkFilter implements LinkFilter{
+public class Cobweb4Ifeng implements Cobweb{
 
 	private String[] _seeds={"http://news.ifeng.com/society/"};
+	
+	private final String _from = "凤凰网社会频道";
+	
+	private NewsCounter _newsCounter;
 
 	@Override
 	public boolean accept(String url){
@@ -33,6 +38,24 @@ public class IfengLinkFilter implements LinkFilter{
 	public String getCharSet() {
 		// TODO Auto-generated method stub
 		return "utf-8";
+	}
+
+	@Override
+	public String getFrom() {
+		// TODO Auto-generated method stub
+		return _from;
+	}
+
+	@Override
+	public NewsCounter getNewsCounter() {
+		// TODO Auto-generated method stub
+		return _newsCounter;
+	}
+
+	@Override
+	public void setNewsCounter(NewsCounter newsCounter) {
+		// TODO Auto-generated method stub
+		_newsCounter=newsCounter;
 	}
 
 }

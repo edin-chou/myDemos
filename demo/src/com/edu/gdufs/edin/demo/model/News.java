@@ -1,6 +1,6 @@
 package com.edu.gdufs.edin.demo.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class News {
 
@@ -9,7 +9,9 @@ public class News {
 	private String _title;
 	private String _source;
 	private String _mediaid;
+	private String _from;
 	private String _content;
+	private Integer _countid;
 	
 	public Integer getId() {
 		return _id;
@@ -41,19 +43,31 @@ public class News {
 	public void setMediaid(String _mediaid) {
 		this._mediaid = _mediaid;
 	}
+	public String getFrom() {
+		return _from;
+	}
+	public void setFrom(String _from) {
+		this._from = _from;
+	}
 	public String getContent() {
 		return _content;
 	}
 	public void setContent(String _content) {
 		this._content = _content;
 	}
-	
+	public Integer getCountid() {
+		return _countid;
+	}
+	public void setCountid(Integer _countid) {
+		this._countid = _countid;
+	}
 	public String toString(){
 		return "title:"+(_title==null?"":_title)+"\n"
 				+"date:"+(_date==null?"":_date.toString())+"\n"
 						+"mediaid:"+(_mediaid==null?"":_mediaid)+"\n"
 								+"source:"+(_source==null?"":_source)+"\n"
-										+"content:"+(_content==null?"":_content);
+									+"content:"+(_content==null?"":_content)+"\n"
+										+"countid:"+(_countid==null?"":_countid);
 		
 	}
 	

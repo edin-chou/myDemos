@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -15,8 +15,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -26,16 +26,24 @@ import org.htmlparser.util.ParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.edu.gdufs.edin.demo.crawler.nodefilters.SinaFilter;
+import com.edu.gdufs.edin.demo.crawler.cobweb.Cobweb;
 import com.edu.gdufs.edin.demo.model.HibernateUtil;
 import com.edu.gdufs.edin.demo.model.News;
+import com.edu.gdufs.edin.demo.model.NewsCounter;
 
 public class Storage {
 	
-	final  Logger logger  =  LoggerFactory.getLogger(MyCrawler.class );
+	final  Logger logger  =  LoggerFactory.getLogger(Storage.class );
+	public static final int SAVESRATE_TIMEOUT = -1;
+	public static final int SAVESRATE_UNSAVED = 0;
+	public static final int SAVESRATE_SAVED = 1;
+	
 	private Session _session;
 	private Transaction _transaction;
 	private int _bufferCount;
+	private String _url;
+	private Cobweb _cobweb;
+	private NewsCounter _newsCounter;
 	
 	public Storage(){
 		_session = HibernateUtil.currentSession();
@@ -44,7 +52,6 @@ public class Storage {
 	}
 	
 	public void close(){
-		_transaction.commit();
 		HibernateUtil.closeSession();
 	}
 	
@@ -53,47 +60,53 @@ public class Storage {
 	 * @param url
 	 * @return
 	 */
-	public String downloadFile(String url,NodeFilter nodeFilter,String charSet){
+	public int downloadFile(String url,Cobweb cobweb){
+		
+		int returnFlag = SAVESRATE_TIMEOUT;
 		
 		try {
 			
 			HttpClient httpclient = new DefaultHttpClient();
-
-			logger.warn("DownLoad url:"+url);
+			
+			_url = url;
+			
+			logger.warn("DownLoad url:"+_url);
 
 			//get方法请求对象
-			HttpGet httpget = new HttpGet(url);
+			HttpGet httpget = new HttpGet(_url);
 			//执行请求得到响应
 			HttpResponse response = httpclient.execute(httpget);
 			//验证响应状态
 			logger.warn("Status:"+response.getStatusLine().toString());
 			//若没有响应返回空
 			if(response.getStatusLine().getStatusCode()!=200){
-				return null;
+				return SAVESRATE_TIMEOUT;
 			}
 			//得到响应实体
 			HttpEntity entity = response.getEntity();
+
+			_cobweb = cobweb;
 			
-			saveToDataBase(entity.getContent(), url,nodeFilter , charSet);
+			returnFlag = saveToDataBase(entity.getContent());
 		
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+		}finally{
+			return returnFlag;
 		}
-		return url;
 	}
 	
 	
-	@SuppressWarnings("finally")
-	public String saveToDataBase(InputStream inStream,String source,NodeFilter nodeFilter,String charSet){
+	@SuppressWarnings({ "finally", "deprecation" })
+	public int saveToDataBase(InputStream inStream){
+		int returnFlag = SAVESRATE_UNSAVED;
 		try {
 			StringBuffer sb = new StringBuffer();
-			BufferedReader br = new BufferedReader(new InputStreamReader(inStream,charSet));
+			BufferedReader br = new BufferedReader(new InputStreamReader(inStream,_cobweb.getCharSet()));
 			String tmp = br.readLine();
 			while(tmp!=null){
 				sb.append(tmp);
@@ -101,11 +114,11 @@ public class Storage {
 			}
 			inStream.close();
 			String html = sb.toString();
-			Parser parser = Parser.createParser(html,charSet);
-			News news = new News();
-			NodeList nodes = parser.parse(nodeFilter);
+			Parser parser = Parser.createParser(html,_cobweb.getCharSet());
+			NodeList nodes = parser.parse(_cobweb.getNodeFilter());
 			int num = nodes.size();
 			if(num>=4){//实际命中有这么多个标签才
+				News news = new News();
 				for (int i = 0; i < num; i ++) {
 				    TagNode node = (TagNode)nodes.elementAt(i);
 				    String tagName = node.getTagName();
@@ -124,10 +137,18 @@ public class Storage {
 				    	news.setTitle(node.toPlainTextString());
 				    }
 				}
-				news.setSource(source);
-				_session.save(news);
-				if(++_bufferCount%20==0){
+				if(news.getDate().getTime()==_cobweb.getNewsCounter().getDate().getTime()){
+					news.setSource(_url);
+					news.setFrom(_cobweb.getNewsCounter().getFrom());
+					news.setCountid(_cobweb.getNewsCounter().getId());
+					_transaction.begin();
+					_session.save(news);
 					_transaction.commit();
+					_cobweb.getNewsCounter().increase();
+					++_bufferCount;
+					returnFlag=SAVESRATE_SAVED;
+				}
+				if(_bufferCount%20==0){
 					_session.flush();
 					_session.clear();
 				}
@@ -135,24 +156,20 @@ public class Storage {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		}  catch (HibernateException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			HibernateUtil.closeSession();
 			_session = HibernateUtil.currentSession();
 			_transaction = _session.beginTransaction();
-			return null;
 		} finally{
-			return source;
+			return returnFlag;
 		}
 	}
 

@@ -23,14 +23,8 @@
 		<property name="source" type="string">
 			<column name="news_source" unique="true"/>
 		</property>
-		<property name="from" type="string">
-			<column name="news_from" />
-		</property>
 		<property name="content" type="text">
 			<column name="news_content" />
-		</property>
-		<property name="countid" type="java.lang.Integer">
-			<column name="news_count_id" />
 		</property>
 	</class>
 	
