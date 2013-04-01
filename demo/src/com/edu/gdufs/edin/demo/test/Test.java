@@ -1,20 +1,33 @@
 package com.edu.gdufs.edin.demo.test;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.Calendar;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.edu.gdufs.edin.demo.analysis.Analyzer;
+import com.edu.gdufs.edin.demo.analysis.CharTree;
+import com.edu.gdufs.edin.demo.analysis.WordWriter;
+import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndLDOF;
 import com.edu.gdufs.edin.demo.model.HibernateUtil;
 import com.edu.gdufs.edin.demo.model.NewsCounter;
+import com.edu.gdufs.edin.demo.model.NwordsCounter;
+
+
 
 public class Test{
 
-
 	public static void main(String a[]) throws Exception{
+	Logger logger  =  LoggerFactory.getLogger(Test.class);
 /*		int inte =0;
 		while(inte<257){
 			System.out.print(inte+":");
@@ -254,9 +267,34 @@ public class Test{
 		System.out.println("get the NewsCounter:\n"+newsCounter.toString());*/
 		
 
-		Calendar calendar = Calendar.getInstance();
+/*		Calendar calendar = Calendar.getInstance();
 		calendar.set(2013, 2, 28, 0, 0, 0);
-		System.out.println(calendar.getTime());
+		System.out.println(calendar.getTime());*/
+	
+		String SAVE_PATH = "E:/排序";
+		NwordsCounter nwc = new NwordsCounter();
+		nwc.setId(1);
+		nwc.setNlettersCount(590672);
+		
+		Session session = HibernateUtil.currentSession();
+		Transaction tx = session.beginTransaction();
+		
+		String savePath2 = SAVE_PATH+"/postAnalyzed"+System.nanoTime()+".txt";
+		WordWriter ww2 = new WordWriter4DOCAndLDOF(savePath2,nwc);
+		CharTree ct2 = new CharTree(ww2);
+		File f2 = new File("E:/排序/sortResult39749260229201.txt");
+		long start2 = System.currentTimeMillis();
+		BufferedReader br2 = new BufferedReader(new InputStreamReader(new FileInputStream(f2)));
+		String tmp2 = br2.readLine();
+		while(tmp2!=null){
+			ct2.addWords(new StringBuffer(tmp2));
+			tmp2 = br2.readLine();
+		}
+		long end2 = System.currentTimeMillis();
+		ct2.close();
+		logger.warn("total count:"+ct2.getTotalCount()+"\t");
+		logger.warn("Analyzing2 spends "+(end2 - start2)+"ms");
+		logger.warn("Analyzed2 data was saved in \""+savePath2+"\"");
 		
 	}
 	

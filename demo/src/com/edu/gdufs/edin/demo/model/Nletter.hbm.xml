@@ -6,25 +6,19 @@
 
 <!-- Generated 2010-11-9 18:15:04 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-	<class name="com.edu.gdufs.edin.demo.model.News" table="news_table">
+	<class name="com.edu.gdufs.edin.demo.model.Nletter" table="nletters_table">
 		<id name="id" type="java.lang.Integer">
-			<column name="news_id" />
+			<column name="nletters_id" />
 			<generator class="identity" />
 		</id>
-		<property name="date" type="date">
-			<column name="news_pubdate" />
+		<property name="nletter" type="string">
+			<column name="nletters_nletter" />
 		</property>
-		<property name="title" type="string">
-			<column name="news_title" />
+		<property name="count" type="java.lang.Integer">
+			<column name="nletters_count" />
 		</property>
-		<property name="mediaid" type="string">
-			<column name="news_mediaid" />
-		</property>
-		<property name="source" type="string">
-			<column name="news_source" unique="true"/>
-		</property>
-		<property name="content" type="text">
-			<column name="news_content" />
+		<property name="nwordsCountId" type="java.lang.Integer">
+			<column name="nwords_count_id" />
 		</property>
 	</class>
 	

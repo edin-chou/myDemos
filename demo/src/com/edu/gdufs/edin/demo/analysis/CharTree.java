@@ -79,7 +79,7 @@ public class CharTree {
 	}
 	
 	//用于递归调用
-	public boolean addNodes(CharNode charNode,StringBuffer inputString){
+	private boolean addNodes(CharNode charNode,StringBuffer inputString){
 		boolean returnValue = false;
 		inputString.deleteCharAt(0);
 		charNode._count++;

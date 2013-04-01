@@ -52,7 +52,6 @@ public class SAXReader extends DefaultHandler {
 	public void startDocument()throws SAXException{
 		startTime = System.currentTimeMillis();
 		extSort = new ExtSort("e:/test");
-		extSort2 = new ExtSort("e:/test");
 	}
 	
 	@Override
@@ -71,8 +70,7 @@ public class SAXReader extends DefaultHandler {
 				if(s.trim().equals(""))continue;
 				//System.out.println(s);
 				try {
-					extSort.addSentenceAsPreWord(s, 5);
-					extSort2.addSentenceAsPostWord(s, 5);
+					extSort.addWord(s);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -88,13 +86,12 @@ public class SAXReader extends DefaultHandler {
 	public void endDocument()throws SAXException{
 		super.endDocument();
 		try {
-			String sortResult = extSort.finished();
-			String sortResult2 = extSort2.finished();
+			String[] sortResult = extSort.finished();
 			System.out.println("start analyzing...");
 			String savePath1 = "e:\\test\\preAnalyzed"+System.nanoTime()+".txt";
 			WordWriter ww = new WordWriter4DOCAndRDOF(savePath1);
 			CharTree ct = new CharTree(ww);
-			File f = new File(sortResult);
+			File f = new File(sortResult[0]);
 			long start = System.currentTimeMillis();
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
 			String tmp = br.readLine();
@@ -115,7 +112,7 @@ public class SAXReader extends DefaultHandler {
 			String savePath2 = "e:\\test\\postAnalyzed"+System.nanoTime()+".txt";
 			WordWriter ww2 = new WordWriter4DOCAndLDOF(savePath2);
 			CharTree ct2 = new CharTree(ww2);
-			File f2 = new File(sortResult2);
+			File f2 = new File(sortResult[1]);
 			long start2 = System.currentTimeMillis();
 			BufferedReader br2 = new BufferedReader(new InputStreamReader(new FileInputStream(f2)));
 			String tmp2 = br2.readLine();

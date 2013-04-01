@@ -46,16 +46,5 @@ public class Cobweb4Ifeng implements Cobweb{
 		return _from;
 	}
 
-	@Override
-	public NewsCounter getNewsCounter() {
-		// TODO Auto-generated method stub
-		return _newsCounter;
-	}
-
-	@Override
-	public void setNewsCounter(NewsCounter newsCounter) {
-		// TODO Auto-generated method stub
-		_newsCounter=newsCounter;
-	}
 
 }

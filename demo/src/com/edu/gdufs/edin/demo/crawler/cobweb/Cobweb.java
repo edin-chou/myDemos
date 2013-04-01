@@ -10,6 +10,4 @@ public interface Cobweb {
 	public NodeFilter getNodeFilter();
 	public String getCharSet();
 	public String getFrom();
-	public NewsCounter getNewsCounter();
-	public void setNewsCounter(NewsCounter newsCounter);
 }

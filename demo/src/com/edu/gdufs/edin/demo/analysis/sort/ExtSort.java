@@ -13,37 +13,58 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.edu.gdufs.edin.demo.crawler.Storage;
 //外排序工具
 public class ExtSort {
+	
+
+	final  Logger logger  =  LoggerFactory.getLogger(ExtSort.class );
 	//外排序最小文件行数
 	private final int SIZE=500000;
+	//
+	private final int WORD_MAX_LEN=6;
 	//排序结果存放路径以及中间处理文件存放路径
 	private String _savePath="E:/排序";
-	//内存词列表
-	private List<String> _wordList=new ArrayList<String>();
-	//外排序文件列表
-	private List<String> _fileList=new ArrayList<String>();
+	//前缀内存词列表
+	private List<String> _preWordList=new ArrayList<String>();
+	//后缀内存词列表
+	private List<String> _postWordList=new ArrayList<String>();
+	//前缀外排序文件列表
+	private List<String> _preFileList=new ArrayList<String>();
+	//后缀外排序文件列表
+	private List<String> _postFileList=new ArrayList<String>();
 
 	//路径初始化，初始化外排序
 	public ExtSort(String savePath){
 		_savePath=savePath;
 	}
+	//初始化外排序
+	public ExtSort(){
+	}
 
 	//往外排序添加一个句子的后缀词的前MAXLEN个
-	public void addSentenceAsPreWord(String sentence,int maxWordLen) throws IOException{
+	private void addSentenceAsPostWord(String sentence,int maxWordLen) throws IOException{
 		int senLen=sentence.length();
 		if(senLen<=0){
 			return;
 		}
 		for(int start=0,end;start<senLen;start++){
 			end=start+maxWordLen;
-			addWord(sentence.substring(start,end<senLen?end:senLen));
+			
+			_postWordList.add(sentence.substring(start,end<senLen?end:senLen));
+			if(_postWordList.size()>=SIZE){
+				_postFileList.add(sortAndSave(_postWordList));
+			}
 		}
 	}	
 	
 
 	//往外排序添加一个句子的前缀词的前MAXLEN个
-	public void addSentenceAsPostWord(String sentence,int maxWordLen) throws IOException{
+	private void addSentenceAsPreWord(String sentence,int maxWordLen) throws IOException{
 		int senLen=sentence.length();
 		if(senLen<=0){
 			return;
@@ -55,31 +76,48 @@ public class ExtSort {
 			for(int i = tmp.length()-1;i>=0;i--){
 				sb.append(tmp.charAt(i));
 			}
-			addWord(sb.toString());
+
+			_preWordList.add(sb.toString());
+			if(_preWordList.size()>=SIZE){
+				_preFileList.add(sortAndSave(_preWordList));
+			}
 		}
 	}
 	
 	//往外排序添加一条记录
 	public void addWord(String wordString) throws IOException{
-		_wordList.add(wordString);
-		if(_wordList.size()>=SIZE){
-			_fileList.add(sortAndSave());
-		}
+		addSentenceAsPostWord(wordString,WORD_MAX_LEN);
+		addSentenceAsPreWord(wordString,WORD_MAX_LEN);
 	}
-	
-	//完成添加后进行归并运算
-	public String finished() throws IOException{
-		_fileList.add(sortAndSave());
+
+	//完成添加后进行归并运算,并返回排序结果存放路径
+	public String[] finished() throws IOException{
+		String[] tmpStrings = {"",""};
+		tmpStrings[0]=postFinished();
+		tmpStrings[1]=preFinished();
+		return tmpStrings;
+	}
+	//完成后缀词添加后进行归并运算
+	private String postFinished() throws IOException{
+		_postFileList.add(sortAndSave(_postWordList));
 		System.out.println("merge sorting...please wait！");
-		String resultFile = mergeSort(_fileList);
+		String resultFile = mergeSort(_postFileList);
+		System.out.println("merge sort is finished, please check results at "+resultFile);
+		return resultFile;
+	}
+	//完成前缀次添加后进行归并运算
+	private String preFinished() throws IOException{
+		_preFileList.add(sortAndSave(_preWordList));
+		System.out.println("merge sorting...please wait！");
+		String resultFile = mergeSort(_preFileList);
 		System.out.println("merge sort is finished, please check results at "+resultFile);
 		return resultFile;
 	}
 	
 	//对内存记录进行排序，并保存成文件
-	private String sortAndSave() throws IOException{
-		if(_wordList.size()>=0){
-			Collections.sort(_wordList);
+	private String sortAndSave(List<String> wordList) throws IOException{
+		if(wordList.size()>=0){
+			Collections.sort(wordList);
 			String fileName = _savePath+"/tmp";//"/split"+System.nanoTime()+".txt";
 			File file = new File(fileName);
 			if(!file.exists()){
@@ -88,12 +126,12 @@ public class ExtSort {
 			fileName = fileName+"/split"+System.nanoTime()+".txt";
 			file = new File(fileName);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-			for(Iterator i = _wordList.iterator();i.hasNext();)
+			for(Iterator i = wordList.iterator();i.hasNext();)
 				bw.write((String)i.next()+"\n");
 			bw.close();
-			_wordList.clear();
+			wordList.clear();
 			//wordList=new ArrayList<String>();
-			System.out.println("file \""+fileName+"\" had been generated");
+			logger.warn("file \""+fileName+"\" had been generated");
 			return fileName;
 		}else{
 			return "null";

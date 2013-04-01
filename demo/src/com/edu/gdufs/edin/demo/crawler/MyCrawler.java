@@ -20,7 +20,7 @@ public class MyCrawler {
 	
 	final  Logger logger  =  LoggerFactory.getLogger(MyCrawler.class);
 	
-	private static final int MAXCOUNT = 1000;
+	private static final int MAXCOUNT = 2000;
 	
 	private LinkQueue linkQueue = new LinkQueue();
 	
@@ -39,33 +39,14 @@ public class MyCrawler {
 	 * 抓取过程
 	 * @param seeds
 	 */
-	public void crawling(Cobweb cobweb,Date date){
+	public void crawling(Cobweb cobweb){
 		
 		//初始化 URL 队列
 		initCrawlerWithSeeds(cobweb.getSeeds());
 		
-		//获取爬虫计数器信息
-		Session session = HibernateUtil.currentSession();
-		Transaction transaction = session.beginTransaction();
-		Query query = session.createQuery("from NewsCounter nc where nc.date=:date and nc.from=:from")
-				.setDate("date",date)
-				.setString("from",cobweb.getFrom());
-		NewsCounter newsCounter = (NewsCounter)query.uniqueResult();
-		
-		if(newsCounter==null){
-			newsCounter = new NewsCounter();
-			newsCounter.setFrom(cobweb.getFrom());
-			newsCounter.setDate(date);
-			newsCounter.setCount(0);
-			session.save(newsCounter);
-			transaction.commit();
-			HibernateUtil.closeSession();
-		}
-		
-		cobweb.setNewsCounter(newsCounter);
-
 		//初始化可持续化存储类
 		Storage stor = new Storage();
+		
 		//循环条件：待抓取的链接不空且抓取的网页不多于MAXCOUNT
 		while(!linkQueue.unVisitedUrlsEmpty()
 				&&linkQueue.getVisitedUrlNum()<MAXCOUNT){
@@ -90,11 +71,6 @@ public class MyCrawler {
 		//关闭持续化存储对象
 		stor.close();
 		
-		session = HibernateUtil.currentSession();
-		transaction = session.beginTransaction();
-		session.update(newsCounter);
-		transaction.commit();
-		HibernateUtil.closeSession();
 	}
 		
 	//main 方法入口
@@ -105,11 +81,15 @@ public class MyCrawler {
 		LinkFilter filter = new SinaLinkFilter();
 		crawler.crawling(filter);
 */
+		
 		MyCrawler crawler = new MyCrawler();
 		//自定义过滤器，提取以种子连接为开头的链接
 		Cobweb cobweb = new Cobweb4Sina();
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2013, 2, 29, 0, 0, 0);
-		crawler.crawling(cobweb,calendar.getTime());
+		crawler.crawling(cobweb);
+		
+		MyCrawler crawler2 = new MyCrawler();
+		//自定义过滤器，提取以种子连接为开头的链接
+		Cobweb cobweb2 = new Cobweb4Ifeng();
+		crawler2.crawling(cobweb2);
 	}
 }

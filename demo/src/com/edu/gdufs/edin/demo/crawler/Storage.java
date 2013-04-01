@@ -137,17 +137,13 @@ public class Storage {
 				    	news.setTitle(node.toPlainTextString());
 				    }
 				}
-				if(news.getDate().getTime()==_cobweb.getNewsCounter().getDate().getTime()){
-					news.setSource(_url);
-					news.setFrom(_cobweb.getNewsCounter().getFrom());
-					news.setCountid(_cobweb.getNewsCounter().getId());
-					_transaction.begin();
-					_session.save(news);
-					_transaction.commit();
-					_cobweb.getNewsCounter().increase();
-					++_bufferCount;
-					returnFlag=SAVESRATE_SAVED;
-				}
+				news.setSource(_url);
+				news.setFrom(_cobweb.getFrom());
+				_transaction.begin();
+				_session.save(news);
+				_transaction.commit();
+				++_bufferCount;
+				returnFlag=SAVESRATE_SAVED;
 				if(_bufferCount%20==0){
 					_session.flush();
 					_session.clear();
