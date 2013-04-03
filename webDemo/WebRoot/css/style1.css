@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	padding-bottom: 20px;
+	width: 1000px;
+	background-color: #FFFFFC;
+	font-family: "仿宋";
+	margin-top: 0;
+	margin-right: 70px;
+	margin-bottom: 0;
+	margin-left: 70px;
+}
+#headbar{
+	text-align: center;
+}
+#headbar h1{
+	font-size: 48px;
+	line-height: 100px;
+}
+#pathbar h3 div {
+	background-color: #009999;
+	width: auto;
+	float: left;
+	border-radius: 10px;
+	height: 25px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	font-family: "华文仿宋";
+}
+#main_content {
+	background-color: #99ccff;
+	border-radius: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 20px;
+	padding-left: 10px;
+	margin-bottom: 30px;
+}
+
+#main_content .details {
+	background-color: #ccff99;
+	margin-bottom: 20px;
+	padding: 10px;
+	border-radius: 10px;
+}
+#main_content .details:hover {
+	opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#main_content .passage {
+	background-color: #6699cc;
+	margin-right: 10px;
+	margin-left: 10px;
+	padding: 10px;
+	border-radius: 10px;
+}
+#main_content .passage:hover{
+	opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#pathbar h3 {
+	height: 25px;
+}
+#main_content .details hr {
+	color: #99ccff;
+}
+#more {
+	background-color: #99ccff;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+}
+#more:hover{
+	opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#pathbar h3 div:hover {
+	opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#news {
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #99ccff;
+	border-radius: 10px;
+}
+
+#news:hover {
+	opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#bottombar {
+	background-color: #ccccff;
+	padding: 5px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 14px;
+}

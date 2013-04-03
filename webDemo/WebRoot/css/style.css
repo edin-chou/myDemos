@@ -1,0 +1,159 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	padding-bottom: 20px;
+	width: 1000px;
+	background-color: #FFFFFC;
+	font-family: "仿宋";
+	margin-top: 0;
+	margin-right: 70px;
+	margin-bottom: 0;
+	margin-left: 70px;
+}
+
+#headbar{
+	text-align: center;
+}
+#headbar h1{
+	font-size: 48px;
+	line-height: 100px;
+}
+#datebar{
+    margin: 30px 0px 30px 0px;    
+    text-align: center;
+}
+#datebar span{
+    background-color: #009999;
+    color: black;
+    font-size: 20px;
+    border-radius: 10px;
+    padding:8px 60px 8px 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#datebar span:hover{
+    opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#datebar span a{
+    color:black;
+    text-decoration:none;
+}
+
+#datebar span a:hover{
+    text-decoration:underline;
+    -moz-transition-duration: 0.5s;	
+}
+
+.passage a{
+    color:#666666;
+    text-decoration: none;    
+}
+.passage a:hover{
+    text-decoration:underline;
+    -moz-transition-duration: 0.5s;	
+}
+
+.passage{
+    margin:0px 0px 20px 0px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left:10px;
+    padding-right: 10px;
+    background-color: #99ccff;
+    border-top:#0CF dashed;    
+    border-top-width: 0px;
+    border-radius: 10px;
+}
+.passage:hover{
+    background-color: #bbeeff;
+    -moz-transition-duration: 0.5s;	
+}
+.passage .title{
+    margin-right:80px;
+    width:500px;
+    height:40px;
+}
+.passage .title .keyword{
+    color: #333333;
+    font-size: 30px;
+    padding:0px 0px 0px 0px;
+    margin:0px 10px 0px 0px;
+    font-weight:bold;
+
+}
+.passage .title .new{
+    color: #ff6666;
+    font-weight: 100;
+    font-size: 30px;
+    font-family: monospace;
+}
+.passage .relatednum{
+    float:right;
+    width:100px;
+    height:16px;
+    text-align:right;
+    font-size:20px;
+    color:#666;
+    font-weight:bold;
+}
+.passage .content{
+    line-height:24px;
+    margin-bottom:10px;
+    padding:0px 0px 0px 20px;
+    text-align:left;
+    width:100%;
+}
+.passage .content p{
+    margin:5px 0px 5px 0px;
+    text-indent:2em;
+}
+.passage .content li{       
+    list-style-type:circle;    
+    color:#666666;
+}
+.passage .passagebottomleft{
+    font-size:12px;
+}
+.passage .passagebottomright{
+    float:right;
+}
+
+#more{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    background-color: #6699ff;
+    text-align: center;
+	margin-bottom: 20px;
+}
+#more:hover{
+    opacity: 0.8;
+    -moz-transition-duration: 0.5s;
+}
+#more a{
+    text-decoration: none;
+    font-size: 20px;
+    color: #333;
+}
+#more a:hover{
+    text-decoration:underline;
+    -moz-transition-duration: 0.5s;	
+}
+.clear{
+    clear:both;
+}
+#newers p {
+	line-height: 30px;
+}
+#newers {
+	background-color: #6699ff;
+}
+#bottombar {
+	background-color: #ccccff;
+	padding: 5px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 14px;
+}

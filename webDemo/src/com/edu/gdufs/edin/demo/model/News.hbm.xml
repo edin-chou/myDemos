@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- Generated 2010-11-9 18:15:04 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+	<class name="com.edu.gdufs.edin.demo.model.News" table="news_table">
+		<id name="id" type="java.lang.Integer">
+			<column name="news_id" />
+			<generator class="identity" />
+		</id>
+		<property name="date" type="date">
+			<column name="news_pubdate" />
+		</property>
+		<property name="title" type="string">
+			<column name="news_title" />
+		</property>
+		<property name="mediaid" type="string">
+			<column name="news_mediaid" />
+		</property>
+		<property name="source" type="string">
+			<column name="news_source" unique="true"/>
+		</property>
+		<property name="from" type="string">
+			<column name="news_from" />
+		</property>
+		<property name="content" type="text">
+			<column name="news_content" />
+		</property>
+		<property name="countid" type="java.lang.Integer">
+			<column name="news_count_id" />
+		</property>
+	</class>
+	
+</hibernate-mapping>
