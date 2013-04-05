@@ -1,26 +1,16 @@
 package com.edu.gdufs.edin.demo.test;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.edu.gdufs.edin.demo.analysis.Analyzer;
-import com.edu.gdufs.edin.demo.analysis.CharTree;
-import com.edu.gdufs.edin.demo.analysis.WordWriter;
-import com.edu.gdufs.edin.demo.analysis.WordWriter4DOCAndLDOF;
 import com.edu.gdufs.edin.demo.model.HibernateUtil;
-import com.edu.gdufs.edin.demo.model.NewsCounter;
-import com.edu.gdufs.edin.demo.model.NwordsCounter;
+import com.edu.gdufs.edin.demo.model.Oword;
 
 
 
@@ -271,7 +261,7 @@ public class Test{
 		calendar.set(2013, 2, 28, 0, 0, 0);
 		System.out.println(calendar.getTime());*/
 	
-		String SAVE_PATH = "E:/排序";
+/*		String SAVE_PATH = "E:/排序";
 		NwordsCounter nwc = new NwordsCounter();
 		nwc.setId(1);
 		nwc.setNlettersCount(590672);
@@ -294,8 +284,18 @@ public class Test{
 		ct2.close();
 		logger.warn("total count:"+ct2.getTotalCount()+"\t");
 		logger.warn("Analyzing2 spends "+(end2 - start2)+"ms");
-		logger.warn("Analyzed2 data was saved in \""+savePath2+"\"");
-		
+		logger.warn("Analyzed2 data was saved in \""+savePath2+"\"");*/
+	
+	
+	Session sess = HibernateUtil.currentSession();
+	Query query = sess.createQuery("from Oword");
+	List list = query.list();
+	Iterator i = list.iterator();
+	while(i.hasNext()){
+		Oword oword = (Oword)i.next();
+		System.out.println(oword.getWord());
+	}
+	
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.edu.gdufs.edin.demo.model;
 
+import java.util.List;
+
 public class Nword {
 	
 	private Integer _id;
@@ -9,6 +11,7 @@ public class Nword {
 	private Integer _nwordCount;
 	private Double _mutualInfo;
 	private Integer _nwordsCountId;
+	private List<News> _newsList;
 	
 	public Integer getId() {
 		return _id;
@@ -51,6 +54,12 @@ public class Nword {
 	}
 	public void setNwordCount(Integer _nwordCount) {
 		this._nwordCount = _nwordCount;
+	}
+	public List<News> getNewsList() {
+		return _newsList;
+	}
+	public void setNewsList(List<News> _newsList) {
+		this._newsList = _newsList;
 	}
 	
 	

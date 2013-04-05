@@ -8,23 +8,24 @@ import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.edu.gdufs.edin.demo.model.Nletter;
 import com.edu.gdufs.edin.demo.model.NwordsCounter;
 
 public class WordWriter {
+
+	final  Logger logger  =  LoggerFactory.getLogger(WordWriter.class);
 	
-	protected final double ENTROPY_THRESHOLD = 0.8;
+	protected final double ENTROPY_THRESHOLD = 1.5;
 	protected final int COUNT_THRESHOLD = 3;
-	protected BufferedWriter _writer;
-	protected NwordsCounter _nwordsCounter;
+	protected final int MUTUALINFO_THRESHOLD = 0;
+/*	protected final int DIF_DEFAULT = 3;*/
+	protected WordsAnalyzingCounter _wordsAnalyzingCounter;
 	
-	public WordWriter(String outputFileName,NwordsCounter nwordsCounter) throws IOException{
-		File f = new File(outputFileName);
-		if(!f.exists()){
-			f.createNewFile();
-		}
-		_nwordsCounter = nwordsCounter;
-		_writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(outputFileName))));
+	public WordWriter(WordsAnalyzingCounter wordsAnalyzingCounter) throws IOException{
+		_wordsAnalyzingCounter = wordsAnalyzingCounter;
 	}
 
 	public void write(CharNode root) throws IOException{}

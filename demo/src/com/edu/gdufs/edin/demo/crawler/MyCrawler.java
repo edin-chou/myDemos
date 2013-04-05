@@ -87,9 +87,9 @@ public class MyCrawler {
 		Cobweb cobweb = new Cobweb4Sina();
 		crawler.crawling(cobweb);
 		
-		MyCrawler crawler2 = new MyCrawler();
+/*		MyCrawler crawler2 = new MyCrawler();
 		//自定义过滤器，提取以种子连接为开头的链接
 		Cobweb cobweb2 = new Cobweb4Ifeng();
-		crawler2.crawling(cobweb2);
+		crawler2.crawling(cobweb2);*/
 	}
 }

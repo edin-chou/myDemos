@@ -33,9 +33,6 @@ public class NewsCounter {
 	public void setCount(Integer count) {
 		this._count = count;
 	}
-	public void increase(){
-		this._count++;
-	}
 	public String toString(){
 		return "_id:"+(_id==null?"":_id)+"\n"
 				+"_date:"+(_date==null?"":_date.toString())+"\n"

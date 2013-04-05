@@ -34,6 +34,8 @@
  		<mapping resource="com/edu/gdufs/edin/demo/model/Nletter.hbm.xml"/>
 		<mapping resource="com/edu/gdufs/edin/demo/model/Nword.hbm.xml"/>
 		<mapping resource="com/edu/gdufs/edin/demo/model/NwordsCounter.hbm.xml"/>
+		<mapping resource="com/edu/gdufs/edin/demo/model/Oword.hbm.xml"/>
+<!-- 		<mapping resource="com/edu/gdufs/edin/demo/model/Pword.hbm.xml"/> -->
 					   
 	</session-factory>
 </hibernate-configuration>
