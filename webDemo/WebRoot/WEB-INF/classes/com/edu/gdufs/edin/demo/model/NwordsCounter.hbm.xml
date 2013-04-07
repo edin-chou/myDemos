@@ -17,12 +17,6 @@
 		<property name="toDate" type="date">
 			<column name="nwords_count_toDate" />
 		</property>
-		<property name="nwordsCount" type="java.lang.Integer">
-			<column name="nwords_count" />
-		</property>
-		<property name="nlettersCount" type="java.lang.Integer">
-			<column name="nletters_count" />
-		</property>
 	</class>
 	
 </hibernate-mapping>

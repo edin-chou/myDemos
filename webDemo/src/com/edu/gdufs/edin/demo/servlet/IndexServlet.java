@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.edu.gdufs.edin.demo.lucene.LuceneSearcher;
 import com.edu.gdufs.edin.demo.model.HibernateUtil;
 import com.edu.gdufs.edin.demo.model.Nword;
 import com.edu.gdufs.edin.demo.model.NwordsCounter;
@@ -49,12 +50,27 @@ public class IndexServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		String fromDateString = request.getParameter("fromDate");
+		String toDateString = request.getParameter("toDate");
+		Date fromDate = null;
+		Date toDate = null;
 		Calendar c = Calendar.getInstance();
-		c.set(2013,2,30,0,0,0 );
-		Date toDate = c.getTime();
-		c.add(Calendar.DATE, -3);
-		Date fromDate = c.getTime();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int date = c.get(Calendar.DATE);
+		c.set(year,month,date,0,0,0);
+		long toDay = c.getTime().getTime();
+		request.setAttribute("toDay",toDay);
+		if(fromDateString==null||toDateString==null){
+			toDate = c.getTime();
+			c.add(Calendar.DATE, -3);
+			fromDate = c.getTime();
+		}else{
+			fromDate = new Date(Long.parseLong(request.getParameter("fromDate")));
+			toDate = new Date(Long.parseLong(request.getParameter("toDate")));
+		}
+		
 		List nwordsList = null;
 		Session sess = HibernateUtil.currentSession();
 		Query query= sess.createQuery("from NwordsCounter nwc where nwc.fromDate=:fromDate and nwc.toDate=:toDate")
@@ -62,19 +78,19 @@ public class IndexServlet extends HttpServlet {
 				.setDate("toDate", toDate);
 		NwordsCounter nwc = (NwordsCounter)query.uniqueResult();
 		if(nwc!=null){
-			query = sess.createQuery("from Nword nw where nw.nwordsCountId=:nwcid order by nw.mutualInfo desc")
+			query = sess.createQuery("from Nword nw where nw.nwordsCountId=:nwcid order by nw.nwordCount desc")
 					.setInteger("nwcid", nwc.getId())
 					.setFirstResult(0)
-					.setMaxResults(5);
+					.setMaxResults(30);
 			nwordsList = query.list();
 		}
-		Iterator i = nwordsList.iterator();
-		while(i.hasNext()){
-			Nword nw =(Nword)i.next(); 
-			query = sess.createQuery("from News n where n.content like '%"+nw.getWord()+"%'")
-					.setFirstResult(0)
-					.setMaxResults(50);
-			nw.setNewsList((query.list()));	
+		if(nwordsList!=null){
+			Iterator i = nwordsList.iterator();
+			LuceneSearcher lcs = new LuceneSearcher();
+			while(i.hasNext()){
+				Nword nw =(Nword)i.next(); 
+				nw.setNewsList(lcs.getTitlesByWords(nw.getWord()));	
+			}
 		}
 		request.setAttribute("nwordsList", nwordsList);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
@@ -94,19 +110,7 @@ public class IndexServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		doGet(request,response);
 	}
 
 	/**

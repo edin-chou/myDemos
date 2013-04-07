@@ -2,6 +2,7 @@ package com.edu.gdufs.edin.demo.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -55,13 +56,13 @@ public class ContentServlet extends HttpServlet {
 				Query query = sess.createQuery("from NwordsCounter nwc where nwc.id=:nwcid")
 						.setInteger("nwcid", nword.getNwordsCountId());
 				NwordsCounter nwordcounter = (NwordsCounter)query.uniqueResult();
-				String timeString = (nwordcounter.getFromDate().getYear()+1900)+"年"
-				+(nwordcounter.getFromDate().getMonth()+1)+"月"+
-				nwordcounter.getFromDate().getDay()+"日"+"-"+
-				(nwordcounter.getToDate().getYear()+1900)+"年"
-				+(nwordcounter.getToDate().getMonth()+1)+"月"+
-				nwordcounter.getToDate().getDay()+"日";
-				
+				SimpleDateFormat sdf = new SimpleDateFormat();
+				sdf.applyPattern("yyyy年MM月dd日");
+				String timeString = 
+						/*(sdf.format(nwordcounter.getFromDate())+"-"+*/
+						sdf.format(nwordcounter.getToDate())
+						/*)*/
+						;
 				query = sess.createQuery("from News n where n.content like '%"+nword.getWord()+"%'")
 						.setFirstResult(0)
 						.setMaxResults(5);
