@@ -85,10 +85,10 @@ public class MyCrawler {
 		crawler.crawling(filter);
 */
 		
-/*		MyCrawler crawler = new MyCrawler();
+		MyCrawler crawler = new MyCrawler();
 		//自定义过滤器，提取以种子连接为开头的链接
 		Cobweb cobweb = new Cobweb4Sina();
-		crawler.crawling(cobweb);*/
+		crawler.crawling(cobweb);
 		
 		MyCrawler crawler2 = new MyCrawler();
 		//自定义过滤器，提取以种子连接为开头的链接

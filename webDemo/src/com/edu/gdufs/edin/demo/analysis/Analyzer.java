@@ -52,8 +52,8 @@ public class Analyzer {
 		_toDate = toDate;
 		_wordsAnalyzingCounter = new WordsAnalyzingCounter();
 	
-		//篇数是否通过
-		int newsCount = checkNews();
+/*		//篇数是否通过
+		int newsCount = checkNews();*/
 			
 		logger.warn("analyzer starts!");
 			
@@ -190,8 +190,9 @@ public class Analyzer {
 			.setDate("toDate",_toDate);
 		NwordsCounter nwc = (NwordsCounter)q.uniqueResult();
 		if(nwc!=null){
-			q = sess.createQuery("delete Nword nw where nw.nwordsCountId=:nowrdsCountId")
-					.setInteger("nwordsCountId", nwc.getId());
+			q = sess.createQuery("delete Nword nw where nw.nwordsCountId=:nowrdscountid")
+					.setInteger("nowrdscountid", nwc.getId());
+			q.executeUpdate();
 		}else{
 			nwc=new NwordsCounter();
 			nwc.setFromDate(_fromDate);
@@ -217,7 +218,7 @@ public class Analyzer {
 		HibernateUtil.closeSession();
 	}
 	
-	private int checkNews(){
+/*	private int checkNews(){
 
 		Session session = HibernateUtil.currentSession();
 		
@@ -242,10 +243,10 @@ public class Analyzer {
 		return counter;
 	}
 
-
+*/
 	
 	public static void main(String args[]){
-		for(int i = 7;i>0;i--){
+		for(int i = 8;i>0;i--){
 			Analyzer a = new Analyzer();
 			Calendar c = Calendar.getInstance();
 			c.set(2013, 3, i, 0, 0, 0);
@@ -258,12 +259,12 @@ public class Analyzer {
 		
 /*		Analyzer a = new Analyzer();
 		Calendar c = Calendar.getInstance();
-		c.set(2013, 3, 7, 0, 0, 0);
+		c.set(2013, 3, 8, 0, 0, 0);
 		Date date1 = c.getTime();
 		c.add(Calendar.DATE,-3);
 		Date date2 = c.getTime();
 		a.startAnalyze(date2, date1);
-		a.writeToTxt();*/
+		a.writeToDataBase();*/
 	}
 	
 }

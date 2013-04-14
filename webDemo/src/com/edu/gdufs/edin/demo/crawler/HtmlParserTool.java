@@ -24,7 +24,7 @@ public class HtmlParserTool {
 		
 		try {
 			Parser parser = new Parser(url);
-			parser.setEncoding("gb2312");
+			parser.setEncoding(cobweb.getCharSet());
 			
 			// 过滤<frame >标签的filter，用来提取frame 标签里的src 属性
 			NodeFilter frameFilter = new NodeFilter(){

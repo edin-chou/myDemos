@@ -41,7 +41,7 @@ public class OwordsPersistance {
 		/*		OwordsPersistance owp = new OwordsPersistance();
 		owp.readToOwordsTable("E:/排序/123.txt");*/
 		OwordsPersistance owp = new OwordsPersistance();
-		owp.readToOwordsTable("E:/排序/owords/result1365261001239.txt");
+		owp.readToOwordsTable("E:/排序/result5/result1365431976189.txt");
 	}
 
 }

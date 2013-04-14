@@ -13,6 +13,10 @@ public class HibernateUtil
 {
 	public static final SessionFactory sessionFactory;
 	
+	//ThreadLocal可以隔离多个线程的数据共享，因此不再需要对线程同步	
+	public static final ThreadLocal<Session> session
+		= new ThreadLocal<Session>();
+	
 	static
 	{
 		try
@@ -30,9 +34,7 @@ public class HibernateUtil
 		}
 	}
 	
-	//ThreadLocal可以隔离多个线程的数据共享，因此不再需要对线程同步	
-	public static final ThreadLocal<Session> session
-		= new ThreadLocal<Session>();
+
 	
 	public static Session currentSession()
 		throws HibernateException
