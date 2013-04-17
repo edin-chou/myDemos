@@ -53,9 +53,21 @@ public class WordWriter4DOCAndLDOF extends WordWriter {
 	
 	private Double getMutualInformation(Word word){
 		char[] charArr =word._word.toCharArray();
-		int para1 = 0;
-		int para2 = 0;
-		for(int i=0;i<charArr.length-1;i++){
+		double result=.0;
+		double p3 = .0;
+		for(Character c:charArr){
+			Integer letterCount = _wordsAnalyzingCounter._lettersMap.get((c.toString()));
+			if(letterCount==null){
+				return .0;
+			}
+			p3+=Math.log(letterCount)/Math.log(2);
+		}
+		
+		result = Math.log(_wordsAnalyzingCounter._wordsCount)/Math.log(2)
+				+Math.log(word._count)/Math.log(2)
+				-(p3/(charArr.length-1));
+		
+/*		for(int i=0;i<charArr.length-1;i++){
 			para1+=Math.log(_wordsAnalyzingCounter._wordsCount)/Math.log(2);
 		}
 		
@@ -66,7 +78,7 @@ public class WordWriter4DOCAndLDOF extends WordWriter {
 			}
 			para2+=Math.log(letterCount)/Math.log(2);
 		}
-		double result = ((double)para1+Math.log(word._count)/Math.log(2))-((double)para2);
+		result = ((double)para1+Math.log(word._count)/Math.log(2))-((double)para2);*/
 		return result;
 	}
 }

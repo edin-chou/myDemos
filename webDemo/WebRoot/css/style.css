@@ -51,13 +51,78 @@ a{
     -moz-transition-duration: 0.5s;	
 }
 
-.passage a{
+.nwords a{
     color:#666666;
     text-decoration: none;    
 }
-.passage a:hover{
+.nwords a:hover{
     text-decoration:underline;
     -moz-transition-duration: 0.5s;	
+}
+
+.nwords{
+    margin:0px 0px 20px 0px;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left:10px;
+    padding-right: 10px;
+    background-color: #99ccff;
+    border-top:#0CF dashed;    
+    border-top-width: 0px;
+    border-radius: 10px;
+}
+.nwords:hover{
+    background-color: #bbeeff;
+    -moz-transition-duration: 0.5s;	
+}
+.nwords .title{
+    margin-right:80px;
+    width:500px;
+    height:40px;
+}
+.nwords .title .keyword{
+    color: #333333;
+    font-size: 30px;
+    padding:0px 0px 0px 0px;
+    margin:0px 10px 0px 0px;
+    font-weight:bold;
+
+}
+.nwords .title .new{
+    color: #ff6666;
+    font-weight: 100;
+    font-size: 30px;
+    font-family: monospace;
+}
+.nwords .relatednum{
+	float: right;
+	width: 200px;
+	height: 16px;
+	text-align: right;
+	font-size: 20px;
+	color: #666;
+	font-weight: bold;
+}
+.nwords .content{
+    line-height:24px;
+    margin-bottom:10px;
+    padding:0px 0px 0px 20px;
+    text-align:left;
+    width:100%;
+}
+.nwords .content p{
+    margin:5px 0px 5px 0px;
+    text-indent:2em;
+}
+.nwords .content li{       
+    list-style-type:circle;    
+    color:#666666;
+}
+.nwords .passagebottomleft{
+    font-size:12px;
+}
+.nwords .passagebottomright{
+    float:right;
 }
 
 .passage{
@@ -74,55 +139,6 @@ a{
 .passage:hover{
     background-color: #bbeeff;
     -moz-transition-duration: 0.5s;	
-}
-.passage .title{
-    margin-right:80px;
-    width:500px;
-    height:40px;
-}
-.passage .title .keyword{
-    color: #333333;
-    font-size: 30px;
-    padding:0px 0px 0px 0px;
-    margin:0px 10px 0px 0px;
-    font-weight:bold;
-
-}
-.passage .title .new{
-    color: #ff6666;
-    font-weight: 100;
-    font-size: 30px;
-    font-family: monospace;
-}
-.passage .relatednum{
-	float: right;
-	width: 200px;
-	height: 16px;
-	text-align: right;
-	font-size: 20px;
-	color: #666;
-	font-weight: bold;
-}
-.passage .content{
-    line-height:24px;
-    margin-bottom:10px;
-    padding:0px 0px 0px 20px;
-    text-align:left;
-    width:100%;
-}
-.passage .content p{
-    margin:5px 0px 5px 0px;
-    text-indent:2em;
-}
-.passage .content li{       
-    list-style-type:circle;    
-    color:#666666;
-}
-.passage .passagebottomleft{
-    font-size:12px;
-}
-.passage .passagebottomright{
-    float:right;
 }
 
 #more{

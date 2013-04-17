@@ -24,9 +24,33 @@
     <servlet-name>ContentServlet</servlet-name>
     <servlet-class>com.edu.gdufs.edin.demo.servlet.ContentServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>Index4ajaxServlet</servlet-name>
+    <servlet-class>com.edu.gdufs.edin.demo.servlet.Index4ajaxServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>getNwords</servlet-name>
+    <servlet-class>com.edu.gdufs.edin.demo.servlet.getNwords</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>getMoreNwords</servlet-name>
+    <servlet-class>com.edu.gdufs.edin.demo.servlet.getMoreNwords</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>getMoreNews</servlet-name>
+    <servlet-class>com.edu.gdufs.edin.demo.servlet.getMoreNews</servlet-class>
+  </servlet>
 
 
-
+  
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/Index</url-pattern>
@@ -34,6 +58,22 @@
   <servlet-mapping>
     <servlet-name>ContentServlet</servlet-name>
     <url-pattern>/Content</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Index4ajaxServlet</servlet-name>
+    <url-pattern>/Index4ajax</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>getNwords</servlet-name>
+    <url-pattern>/getNwords</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>getMoreNwords</servlet-name>
+    <url-pattern>/getMoreNwords</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>getMoreNews</servlet-name>
+    <url-pattern>/getMoreNews</url-pattern>
   </servlet-mapping>
 
   

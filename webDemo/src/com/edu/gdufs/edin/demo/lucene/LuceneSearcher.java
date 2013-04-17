@@ -16,14 +16,17 @@ import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.SimpleFSDirectory;
 
 import com.edu.gdufs.edin.demo.model.News;
+import com.edu.gdufs.edin.demo.model.Nword;
 
 public class LuceneSearcher {
 	
-	private final int MAX_SEARCH_NUM = 10000;
+	private static final int TITLES_PAGE_SIZE=5;
+	private static final int MAX_SEARCH_NUM = 10000;
 	private final String INDEX_STORE_PATH = "e:/排序/Index";
 	
 	public List getTitlesByWords(String searchWords){
@@ -60,6 +63,82 @@ public class LuceneSearcher {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	
+	public void getTitlesByNword(Nword nword){
+		List TitleList = new LinkedList(); 
+		FSDirectory fsDir;
+		try {
+			fsDir = SimpleFSDirectory.open(new File(INDEX_STORE_PATH));
+			IndexReader ir = IndexReader.open(fsDir);  
+            IndexSearcher search = new IndexSearcher(ir);
+            BooleanQuery bQuery=new BooleanQuery();
+            List termList = new LinkedList();
+            PhraseQuery query=new PhraseQuery();
+            char[] words = nword.getWord().toCharArray();
+            for(char c:words){
+                query.add(new Term("content",(new Character(c)).toString()));
+            }
+            Sort sort = new Sort();
+            SortField sf = new SortField("date", SortField.LONG, true);
+            sort.setSort(sf);
+            TopFieldDocs tfd = search.search(query, TITLES_PAGE_SIZE,sort);
+            nword.setNewsTotalCount(tfd.totalHits);
+            ScoreDoc[] docs = tfd.scoreDocs;
+            for(ScoreDoc sd:docs){
+            	News n = new News();
+            	n.setId(Integer.parseInt(search.doc(sd.doc).get("id")));
+            	n.setTitle(search.doc(sd.doc).get("title"));
+            	n.setDate(new Date(Long.parseLong(search.doc(sd.doc).get("date"))));
+            	TitleList.add(n);
+            }
+            nword.setNewsList(TitleList);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void getMoreTitlesByNword(Nword nword,int startNum){
+		List TitleList = new LinkedList(); 
+		FSDirectory fsDir;
+		try {
+			fsDir = SimpleFSDirectory.open(new File(INDEX_STORE_PATH));
+			IndexReader ir = IndexReader.open(fsDir);  
+            IndexSearcher search = new IndexSearcher(ir);
+            BooleanQuery bQuery=new BooleanQuery();
+            List termList = new LinkedList();
+            PhraseQuery query=new PhraseQuery();
+            char[] words = nword.getWord().toCharArray();
+            for(char c:words){
+                query.add(new Term("content",(new Character(c)).toString()));
+            }
+            Sort sort = new Sort();
+            SortField sf = new SortField("date", SortField.LONG, true);
+            sort.setSort(sf);
+            TopFieldDocs tfd = search.search(query, MAX_SEARCH_NUM,sort);
+            nword.setNewsTotalCount(tfd.totalHits);
+            ScoreDoc[] docs = tfd.scoreDocs;
+            int end = 0;
+            if(docs.length<(startNum+TITLES_PAGE_SIZE)){
+            	end = docs.length;
+            }else{
+            	end = startNum+TITLES_PAGE_SIZE;
+            }
+            for(int i = startNum;i<end;i++){
+            	News n = new News();
+            	int docid = docs[i].doc;
+            	n.setId(Integer.parseInt(search.doc(docid).get("id")));
+            	n.setTitle(search.doc(docid).get("title"));
+            	n.setDate(new Date(Long.parseLong(search.doc(docid).get("date"))));
+            	TitleList.add(n);
+            }
+            nword.setNewsList(TitleList);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

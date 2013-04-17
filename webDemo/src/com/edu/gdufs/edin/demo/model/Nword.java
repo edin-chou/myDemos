@@ -11,8 +11,17 @@ public class Nword {
 	private Integer _nwordCount;
 	private Double _mutualInfo;
 	private Integer _nwordsCountId;
+	private int _newsTotalCount;
 	private List<News> _newsList;
 	
+	
+	
+	public int getNewsTotalCount() {
+		return _newsTotalCount;
+	}
+	public void setNewsTotalCount(int _newsTotalCount) {
+		this._newsTotalCount = _newsTotalCount;
+	}
 	public Integer getId() {
 		return _id;
 	}

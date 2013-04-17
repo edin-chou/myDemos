@@ -18,9 +18,9 @@ public class WordWriter {
 
 	final  Logger logger  =  LoggerFactory.getLogger(WordWriter.class);
 	
-	protected final double ENTROPY_THRESHOLD = 1.5;
+	protected final double ENTROPY_THRESHOLD = 1.95;
 	protected final int COUNT_THRESHOLD = 3;
-	protected final int MUTUALINFO_THRESHOLD = 0;
+	protected final double MUTUALINFO_THRESHOLD = 5.95;
 /*	protected final int DIF_DEFAULT = 3;*/
 	protected WordsAnalyzingCounter _wordsAnalyzingCounter;
 	

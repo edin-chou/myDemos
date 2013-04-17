@@ -38,7 +38,7 @@ public class Analyzer {
 	final  Logger logger  =  LoggerFactory.getLogger(Analyzer.class);
 
 	private static final int COUNTTHRESHOLD = 500;
-	private static final int WORD_TO_SAVE_THRESHOLD = 2000;
+	private static final int WORD_TO_SAVE_THRESHOLD = 3000;
 	private static final String FROMSTRINGS = "新浪网社会频道,凤凰网社会频道";
 	private static final String SAVE_PATH = "E:/排序/";
 	
@@ -159,11 +159,11 @@ public class Analyzer {
 				Entry<String,Word> entry = (Entry<String,Word>)i.next();
 				Word w = entry.getValue();
 				if(w!=null&&w._lentropy>0&&w._rentropy>0&&word_to_save_threshold_counter++<WORD_TO_SAVE_THRESHOLD){
-					bw.write(w._word+/*"\t"
+					bw.write(w._word+"\t"
 							+w._count+"\t"
 							+w._mutualinfo+"\t"
 							+w._lentropy+"\t"
-							+w._rentropy+*/"\n"
+							+w._rentropy+"\n"
 							);
 				}
 			}
@@ -246,7 +246,7 @@ public class Analyzer {
 */
 	
 	public static void main(String args[]){
-		for(int i = 8;i>0;i--){
+		for(int i = 16;i>0;i--){
 			Analyzer a = new Analyzer();
 			Calendar c = Calendar.getInstance();
 			c.set(2013, 3, i, 0, 0, 0);
@@ -254,7 +254,7 @@ public class Analyzer {
 			c.add(Calendar.DATE,-3);
 			Date date2 = c.getTime();
 			a.startAnalyze(date2, date1);
-			a.writeToDataBase();
+			a.writeToTxt();
 		}
 		
 /*		Analyzer a = new Analyzer();
@@ -272,6 +272,8 @@ class ComparatorImp implements Comparator<Entry<String,Word>> {
 
 	@Override
 	public int compare(Entry<String,Word> o1, Entry<String,Word> o2) {
-		return o2.getValue()._count-o1.getValue()._count;
+		//return (int)((o2.getValue()._mutualinfo-o1.getValue()._mutualinfo)*1000);
+		//return o2.getValue()._count-o1.getValue()._count;
+		return (int)((Math.min(o2.getValue()._rentropy,o2.getValue()._lentropy)-Math.min(o1.getValue()._rentropy,o1.getValue()._lentropy))*1000);
 	}
 }

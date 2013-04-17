@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   
          <div id="pathbar"> 
-          <h3><div><a href="<%=basePath %>Index">首页</a>&gt;<%=timeString %>
+          <h3><div><a href="<%=basePath %>Index4ajax">首页</a>&gt;<%=timeString %>
           &gt;<%=nword.getWord() %></div></h3>
         </div>
 
@@ -63,14 +63,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </ul>
     </div>
         
-        <div id="news">          
+<!--         <div id="news">          
           TOP热词搜索列表
           <ul>
                 <li><a href="#">新词1</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">首条新闻</a></li>
                 <li><a href="#">新词2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#">首条新闻</a></li>
                 <li><a href="#">新词3</a>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#">首条新闻</a> </li>
           </ul>
-        </div>
+        </div> -->
         
     <div id="bottombar"> 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 联系我们：</div>
         
